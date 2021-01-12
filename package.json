@@ -1,0 +1,38 @@
+{
+  "name": "nodenamo-runspace",
+  "version": "0.0.1",
+  "description": "A run-time environment to execute nodenamo commands.",
+  "main": "dist/index.js",
+  "typings": "dist/index",
+  "files": [
+    "dist/*"
+  ],
+  "scripts": {
+    "test": "cd spec/ && mocha --require ts-node/register *.ts",
+    "build": "tsc --outDir dist/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@gitlab.com/mappies/nodenamo-runspace.git"
+  },
+  "author": "Nithiwat Kampanya",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/mappies/nodenamo-runspace/issues"
+  },
+  "homepage": "https://github.com/mappies/nodenamo-runspace#readme",
+  "dependencies": {
+    "nodenamo": "^1.2.3",
+    "nodenamo-query-parser": "^1.0.0"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.2.7",
+    "@types/mocha": "^5.2.7",
+    "@types/node": "^13.1.4",
+    "chai": "^4.2.0",
+    "mocha": "^7.0.0",
+    "ts-node": "^8.5.4",
+    "typemoq": "^2.1.0",
+    "typescript": "^3.7.4"
+  }
+}
