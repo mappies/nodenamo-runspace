@@ -1,6 +1,6 @@
 {
   "name": "nodenamo-runspace",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "A run-time environment to execute nodenamo commands.",
   "main": "dist/index.js",
   "typings": "dist/index",
@@ -22,8 +22,9 @@
   },
   "homepage": "https://github.com/mappies/nodenamo-runspace#readme",
   "dependencies": {
+    "aws-sdk": "^2.828.0",
     "nodenamo": "^1.2.3",
-    "nodenamo-query-parser": "^1.0.0"
+    "nodenamo-query-parser": "^1.0.3"
   },
   "devDependencies": {
     "@types/chai": "^4.2.7",
