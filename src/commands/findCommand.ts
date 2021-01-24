@@ -9,10 +9,16 @@ export class FindCommand extends Command
         super();
     }
 
-    async execute(statement:IStatement): Promise<any>
+    async execute(statement:IStatement, options?:object): Promise<any>
     {
         let find = <IFindStatement> statement;
         
+        if(options)
+        {
+            find.limit = options['limit'] || find.limit;
+            find.resume = options['resume'] || find.resume;
+        }
+
         let projections = (find.projections || []).filter(p => p !== '*');
 
         return await this.nodenamo

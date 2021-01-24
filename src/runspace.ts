@@ -15,12 +15,12 @@ export class Runspace
         this.factory = new CommandFactory(nodenamo)
     }
     
-    async execute(queryString:string): Promise<object>
+    async execute(queryString:string, options?:object): Promise<object>
     {
         let statement = parse(queryString)
 
         let command = this.factory.create(statement);
 
-        return await command.execute(statement)
+        return await command.execute(statement, options)
     }
 }

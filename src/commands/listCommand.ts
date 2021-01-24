@@ -9,10 +9,16 @@ export class ListCommand extends Command
         super();
     }
 
-    async execute(statement:IStatement): Promise<any>
+    async execute(statement:IStatement, options?:object): Promise<any>
     {
         let list = <IListStatement> statement;
         
+        if(options)
+        {
+            list.limit = options['limit'] || list.limit;
+            list.resume = options['resume'] || list.resume;
+        }
+
         let projections = (list.projections || []).filter(p => p !== '*');
 
         return await this.nodenamo

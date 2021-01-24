@@ -11,7 +11,14 @@ export abstract class Command
 
     getType(name:string): {new (...args: any[]): any;}
     {
-        return types.get(name)
+        let result = types.get(name);
+
+        if(result === undefined)
+        {
+            throw new Error(`'${name}' could not be found. Use "IMPORT" to import it.`)
+        }
+
+        return result;
     }
 
     getTypes(): string[]
@@ -32,5 +39,5 @@ export abstract class Command
         types.clear()
     }
 
-    abstract execute(statement:IStatement): Promise<any>
+    abstract execute(statement:IStatement, options?:object): Promise<any>
 }
