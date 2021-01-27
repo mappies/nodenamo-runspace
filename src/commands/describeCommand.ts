@@ -12,9 +12,7 @@ export class DescribeCommand extends Command
     async execute(statement:IStatement): Promise<any>
     {
         let describe = <IDescribeStatement> statement;
-        console.log(this.nodenamo
-            .describe)
-console.log(this.nodenamo.describe(this.getType(describe.name)))
+        
         return await this.nodenamo
                    .describe(this.getType(describe.name))
                    .execute();
