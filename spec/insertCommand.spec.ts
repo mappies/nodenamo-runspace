@@ -41,4 +41,9 @@ describe('InsertCommand', function ()
 
         assert.isTrue(called);
     });
+    
+    afterEach(()=>
+    {
+        new InsertCommand(nodenamo.object).removeTypes();
+    });
 });

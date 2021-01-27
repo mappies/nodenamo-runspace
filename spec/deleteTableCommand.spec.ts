@@ -5,6 +5,7 @@ import { parse } from 'nodenamo-query-parser';
 import { DeleteTable } from 'nodenamo/dist/queries/deleteTable/deleteTable';
 import { For } from 'nodenamo/dist/queries/deleteTable/for';
 import { DeleteTableCommand } from '../src/commands/deleteTableCommand';
+import { Test } from 'mocha';
 
 describe('DeleteTableCommand', function () 
 {
@@ -20,6 +21,7 @@ describe('DeleteTableCommand', function ()
     it('execute()', async () =>
     {
         let command = new DeleteTableCommand(nodenamo.object)
+        command.setType('user', Test)
 
         let mockedFor = Mock.ofType<For>();
         mockedFor.setup(f => f.execute()).callback(()=>called=true).returns(async()=>{});

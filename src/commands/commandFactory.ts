@@ -14,6 +14,7 @@ import { UpdateCommand } from "./updateCommand";
 import { InsertCommand } from "./insertCommand";
 import { OnCommand } from "./onCommand";
 import { ExplainCommand } from './explainCommand';
+import { DescribeCommand } from './describeCommand';
 
 export class CommandFactory
 {
@@ -39,6 +40,7 @@ export class CommandFactory
             case 'unload_table': return new UnloadTableCommand(this.nodenamo)
             case 'create_table': return new CreateTableCommand(this.nodenamo)
             case 'delete_table': return new DeleteTableCommand(this.nodenamo)
+            case 'describe': return new DescribeCommand(this.nodenamo)
             default:
                 throw new Error(`Unrecognized statement: '${statement.type}'`)
         }

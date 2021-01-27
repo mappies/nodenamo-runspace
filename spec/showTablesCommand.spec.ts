@@ -2,9 +2,9 @@ import {assert as assert} from 'chai';
 import { NodeNamo } from 'nodenamo';
 import {Mock, It, IMock} from "typemoq";
 import { parse } from 'nodenamo-query-parser';
-import { UnloadTableCommand } from '../src/commands/unloadTableCommand';
+import { ShowTablesCommand } from '../src/commands/showTablesCommand';
 
-describe('UnloadTableCommand', function () 
+describe('ShowTablesCommand', function () 
 {
     let nodenamo:IMock<NodeNamo>;
 
@@ -13,42 +13,31 @@ describe('UnloadTableCommand', function ()
         nodenamo = Mock.ofType<NodeNamo>();
     });
 
-    it('execute()', async () =>
+    it('execute() - no tables', async () =>
     {
-        let command = new UnloadTableCommand(nodenamo.object)
+        let command = new ShowTablesCommand(nodenamo.object)
 
-        let statement = parse('UNLOAD TABLE invalid')
+        let statement = parse('SHOW TABLES')
         
         let result = await command.execute(statement)
+
+        assert.deepEqual(result, {items:[],lastEvaluatedKey:undefined})
     });
 
-    it('execute()', async () =>
+    it('execute() - with a table', async () =>
     {
-        let command = new UnloadTableCommand(nodenamo.object)
-        command.setType("unload_table_tb1", UnloadTableCommand)
+        let command = new ShowTablesCommand(nodenamo.object)
+        command.setType("show_tables_tb1", ShowTablesCommand)
+
+        let statement = parse('SHOW TABLES')
         
-        assert.isDefined(command.getType('unload_table_tb1'))
-        
-        let statement = parse('UNLOAD TABLE unload_table_tb1')
-        await command.execute(statement)
+        let result = await command.execute(statement)
 
-        assert.isUndefined(command.getType('unload_table_tb1'))
-    });
-
-    it('execute() - non-existent table', async () =>
-    {
-        let command = new UnloadTableCommand(nodenamo.object)
-
-        assert.isUndefined(command.getType('invalid'))
-        
-        let statement = parse('UNLOAD TABLE invalid')
-        await command.execute(statement)
-
-        assert.isUndefined(command.getType('invalid'))
+        assert.deepEqual(result, {items:["show_tables_tb1"],lastEvaluatedKey:undefined})
     });
     
     afterEach(()=>
     {
-        new UnloadTableCommand(nodenamo.object).removeTypes();
+        new ShowTablesCommand(nodenamo.object).removeTypes();
     });
 });

@@ -6,6 +6,7 @@ import { CreateTable } from 'nodenamo/dist/queries/createTable/createTable';
 import { For } from 'nodenamo/dist/queries/createTable/for';
 import { WithCapacityOf } from 'nodenamo/dist/queries/createTable/withCapacityOf';
 import { CreateTableCommand } from '../src/commands/createTableCommand';
+import { Test } from 'mocha';
 
 describe('CreateTableCommand', function () 
 {
@@ -27,6 +28,7 @@ describe('CreateTableCommand', function ()
         it(`execute() - ${test.capacity}`, async () =>
         {
             let command = new CreateTableCommand(nodenamo.object)
+            command.setType('stores', Test)
 
             let mockedWithCapacityOf = Mock.ofType<WithCapacityOf>();
             mockedWithCapacityOf.setup(w => w.execute()).callback(()=>called=true).returns(async()=>{});

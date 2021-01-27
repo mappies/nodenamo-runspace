@@ -61,4 +61,9 @@ describe('OnCommand', function ()
 
         assert.isTrue(called);
     });
+    
+    afterEach(()=>
+    {
+        new OnCommand(nodenamo.object).removeTypes();
+    });
 });

@@ -75,4 +75,9 @@ describe('ListCommand', function ()
             assert.deepEqual(result, {items:[],lastEvaluatedKey:undefined});
         });
     });
+    
+    afterEach(()=>
+    {
+        new ListCommand(nodenamo.object).removeTypes();
+    });
 });

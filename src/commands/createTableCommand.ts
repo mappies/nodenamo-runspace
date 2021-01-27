@@ -13,10 +13,15 @@ export class CreateTableCommand extends Command
     {
         let createTable = <ICreateTableStatement> statement;
 
-        return this.nodenamo
-                   .createTable()
-                   .for(this.getType(createTable.for))
-                   .withCapacityOf(createTable.withCapacityOf?.readCapacity, createTable.withCapacityOf?.writeCapacity)
-                   .execute()
+        let command:any = this.nodenamo
+                         .createTable()
+                         .for(this.getType(createTable.for));
+
+        if(createTable.withCapacityOf)
+        {
+            command = command.withCapacityOf(createTable.withCapacityOf.readCapacity, createTable.withCapacityOf.writeCapacity)
+        }
+        
+        return await command.execute()
     }
 }
