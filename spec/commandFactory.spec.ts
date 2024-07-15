@@ -48,7 +48,7 @@ describe('CommandFactory', function ()
         {
             let command = new CommandFactory(nodenamo.object)
 
-            assert.instanceOf(command.create({type: test.type}), test.expectedCommand)
+            assert.instanceOf(command.create({type: test.type}), <any> test.expectedCommand)
         });
     });
 

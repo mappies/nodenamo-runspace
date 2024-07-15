@@ -21,6 +21,11 @@ export class UpdateCommand extends Command
         {
             cursor = cursor.where(update.where?.conditionExpression, update.where?.expressionAttributeNames, update.where?.expressionAttributeValues);
         }
+        
+        if(update.returnValue)
+        {
+            cursor = cursor.returning(update.returnValue);
+        }
 
         return await cursor.withVersionCheck(update.versionCheck).execute();
     }
