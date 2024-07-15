@@ -41,6 +41,11 @@ export class OnCommand extends Command
         {
             cursor = cursor.where(on.where?.conditionExpression, on.where?.expressionAttributeNames, on.where.expressionAttributeValues)
         }
+        
+        if(on.returnValue)
+        {
+            cursor = cursor.returning(on.returnValue);
+        }
 
         return await cursor.withVersionCheck(on.versionCheck).execute();
     }

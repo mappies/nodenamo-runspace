@@ -1,5 +1,5 @@
 import {assert as assert} from 'chai';
-import { NodeNamo } from 'nodenamo';
+import { NodeNamo, ReturnValue } from 'nodenamo';
 import {Mock, It, IMock} from "typemoq";
 import { parse } from 'nodenamo-query-parser';
 import { WithVersionCheck } from 'nodenamo/dist/queries/on/withVersionCheck';
@@ -12,6 +12,7 @@ import { Remove } from 'nodenamo/dist/queries/on/remove';
 import { On } from 'nodenamo/dist/queries/on/on';
 import { Test } from 'mocha';
 import { OnCommand } from '../src/commands/onCommand';
+import { Returning } from 'nodenamo/dist/queries/on/returning';
 
 describe('OnCommand', function () 
 {
@@ -32,8 +33,11 @@ describe('OnCommand', function ()
         let mockedWithVersionCheck = Mock.ofType<WithVersionCheck>();
         mockedWithVersionCheck.setup(w => w.execute()).callback(()=>called=true);
         
+        let mockedReturning = Mock.ofType<Returning>();
+        mockedReturning.setup(w => w.withVersionCheck(true)).returns(()=>mockedWithVersionCheck.object);
+
         let mockedWhere = Mock.ofType<Where>();
-        mockedWhere.setup(w => w.withVersionCheck(true)).returns(()=>mockedWithVersionCheck.object);
+        mockedWhere.setup(w => w.returning(ReturnValue.AllOld)).returns(()=>mockedReturning.object);
         
         let mockedRemove = Mock.ofType<Remove>();
         mockedRemove.setup(r => r.where(It.isAny(), It.isAny(), It.isAny())).returns(()=>mockedWhere.object);
@@ -55,7 +59,7 @@ describe('OnCommand', function ()
 
         nodenamo.setup(n => n.on(1)).returns(()=>mockedOn.object);
         
-        let statement = parse('on 1 from users set name = "some one" add age 12 remove count delete colors "green" where begins_with(name, "some") with version check');
+        let statement = parse('on 1 from users set name = "some one" add age 12 remove count delete colors "green" where begins_with(name, "some") returning allold with version check');
         
         await command.execute(statement);
 

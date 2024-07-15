@@ -39,7 +39,7 @@ describe('ListCommand', function ()
             command.setType('user', Test)
     
             let mockedStronglyConsistent = Mock.ofType<StronglyConsistent>();
-            mockedStronglyConsistent.setup(l => l.execute()).callback(()=>called=true).returns(async()=>({items:[],lastEvaluatedKey:undefined}));
+            mockedStronglyConsistent.setup(l => l.execute()).callback(()=>called=true).returns(async()=>({items:[],lastEvaluatedKey:(<unknown>undefined) as string,firstEvaluatedKey:(<unknown>undefined) as string}));
     
             let mockedLimit = Mock.ofType<Limit>()
             mockedLimit.setup(l => l.stronglyConsistent(true)).returns(()=>mockedStronglyConsistent.object)
@@ -72,7 +72,7 @@ describe('ListCommand', function ()
             let result = await command.execute(statement);
     
             assert.isTrue(called);
-            assert.deepEqual(result, {items:[],lastEvaluatedKey:undefined});
+            assert.deepEqual(result, {items:[],lastEvaluatedKey:undefined,firstEvaluatedKey:undefined});
         });
     });
     
