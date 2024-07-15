@@ -1,6 +1,6 @@
 {
   "name": "nodenamo-runspace",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "description": "A run-time environment to execute nodenamo commands.",
   "main": "dist/index.js",
   "typings": "dist/index",
